@@ -1,6 +1,7 @@
+import { Navbar } from "../../"
 
 export const Calendar = () => {
   return (
-    <div>Calendar</div>
+    <Navbar />
   )
 }
