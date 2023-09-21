@@ -1,10 +1,10 @@
+import { useState } from 'react'
 import { Calendar } from 'react-big-calendar'
-import 'react-big-calendar/lib/css/react-big-calendar.css'
 import { addHours } from 'date-fns'
+import 'react-big-calendar/lib/css/react-big-calendar.css'
 import { Navbar } from "../../"
 import { localizer, getMessagesES } from '../../../helper'
-import { CalendarEvent } from '../CalendarEvent'
-import { useState } from 'react'
+import { CalendarEvent, CalendarModal } from '../'
 
 const eventsList = [
   {
@@ -23,6 +23,7 @@ const eventsList = [
 export const CalendarPage = () => {
 
   const [ lastView ] = useState(localStorage.getItem('lastView' || 'day'))
+  const [handleModal, setHandleModal] = useState(false)
 
   const eventStayleGetter = ( event, start, end, isSelected ) => {
     const style = {
@@ -41,6 +42,7 @@ export const CalendarPage = () => {
 
   const onDoubleClick = ( event ) => {
     console.log({ doubleClick: event })
+    setHandleModal(true)
   }
 
   const onSelect = ( event ) => {
@@ -70,7 +72,8 @@ export const CalendarPage = () => {
         onDoubleClickEvent={ onDoubleClick }
         onSelectEvent={ onSelect }
         onView={ onViewChange }
-        />
+      />
+      { handleModal ? <CalendarModal /> : null }      
     </>
   )
 }
