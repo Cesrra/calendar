@@ -5,6 +5,7 @@ import 'react-big-calendar/lib/css/react-big-calendar.css'
 import { Navbar } from "../../"
 import { localizer, getMessagesES } from '../../../helper'
 import { CalendarEvent, CalendarModal } from '../'
+import { useUiStore } from '../../../hooks'
 
 const eventsList = [
   {
@@ -21,9 +22,8 @@ const eventsList = [
 ]
 
 export const CalendarPage = () => {
-
+  const { openDateModal } = useUiStore()
   const [ lastView ] = useState(localStorage.getItem('lastView' || 'day'))
-  const [handleModal, setHandleModal] = useState(false)
 
   const eventStayleGetter = ( event, start, end, isSelected ) => {
     const style = {
@@ -42,7 +42,7 @@ export const CalendarPage = () => {
 
   const onDoubleClick = ( event ) => {
     console.log({ doubleClick: event })
-    setHandleModal(true)
+    openDateModal()
   }
 
   const onSelect = ( event ) => {
@@ -73,7 +73,7 @@ export const CalendarPage = () => {
         onSelectEvent={ onSelect }
         onView={ onViewChange }
       />
-      { handleModal ? <CalendarModal /> : null }      
+      <CalendarModal />
     </>
   )
 }

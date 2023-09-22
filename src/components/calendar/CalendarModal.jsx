@@ -6,6 +6,7 @@ import { addHours, differenceInSeconds } from "date-fns"
 import es from "date-fns/locale/es"
 import Swal from "sweetalert2"
 import "sweetalert2/dist/sweetalert2.min.css"
+import { useUiStore } from "../../hooks"
 
 
 registerLocale('es', es)
@@ -24,7 +25,7 @@ const customStyles = {
 Modal.setAppElement('#root')
 
 export const CalendarModal = () => {
-    const [ handleModal, setHandleModal ] = useState({ isOpen: true })
+    const { isDateModalOpen, closeDateModal } = useUiStore()
     const [formSubmited, setFormSubmited] = useState(false)
     
     const [ formValues, setFormValues ] = useState({
@@ -49,7 +50,6 @@ export const CalendarModal = () => {
     }, [ formValues.title, formSubmited ])
 
     const onDateChange = ( event, changin ) => {
-        console.log(event, changin)
         setFormValues((last) => ({
             ...last,
             [changin]: event 
@@ -57,13 +57,13 @@ export const CalendarModal = () => {
     }
     
     const onCloseModal = () => {
-        setHandleModal(last => ({ ...last, isOpen: false}))
+        closeDateModal()
     }
 
     const onSubmit = ( event ) => {
         event.preventDefault()
         setFormSubmited(true)
-        const difference = differenceInSeconds( formValues.end, formValues.start)
+        const difference = differenceInSeconds( formValues.end, formValues.start )
         if( isNaN(difference) || difference <= 0 ) {
             Swal.fire('Fechas incorrectas', 'Revisar las fechas ingresadas', 'error')
             return 
@@ -74,7 +74,7 @@ export const CalendarModal = () => {
 
     return (
         <Modal
-            isOpen={ handleModal.isOpen }
+            isOpen={ isDateModalOpen }
             onRequestClose={ onCloseModal }
             style={ customStyles }
             className="modal"
