@@ -1,6 +1,67 @@
+import { useState } from 'react'
+import { Calendar } from 'react-big-calendar'
+import 'react-big-calendar/lib/css/react-big-calendar.css'
+import { FabAddNew, Navbar } from "../../"
+import { localizer, getMessagesES } from '../../../helper'
+import { CalendarEvent, CalendarModal } from '../'
+import { useCalendarStore, useUiStore } from '../../../hooks'
+import { FabDelete } from '../../FabDelete'
 
-export const Calendar = () => {
+export const CalendarPage = () => {
+  const { openDateModal } = useUiStore()
+  const { events, setActiveEvent } = useCalendarStore()
+  const [ lastView ] = useState(localStorage.getItem('lastView' || 'day'))
+
+  const eventStayleGetter = ( event, start, end, isSelected ) => {
+    const style = {
+      backgroundColor: '#000',//347CF7
+      borderRadius: '0',
+      opacity: 'white',
+      event, 
+      start, 
+      end, 
+      isSelected
+    }
+    return {
+      style
+    }
+  }
+
+  const onDoubleClick = () => {
+    openDateModal()
+  }
+  
+  const onSelect = ( event ) => {
+    setActiveEvent(event)
+  }
+
+  const onViewChange = ( event ) => {
+    localStorage.setItem('lastView', event)
+  }
+
   return (
-    <div>Calendar</div>
+    <>
+      <Navbar />
+      <Calendar
+        culture='es'
+        localizer={ localizer }
+        events={ events }
+        defaultView={ lastView }
+        startAccessor="start"
+        endAccessor="end"
+        style={{ height: 'calc( 100vh - 80px)' }}
+        messages={ getMessagesES() }
+        eventPropGetter={ eventStayleGetter }
+        components={{
+          event: CalendarEvent,
+        }}
+        onDoubleClickEvent={ onDoubleClick }
+        onSelectEvent={ onSelect }
+        onView={ onViewChange }
+      />
+      <CalendarModal />
+      <FabAddNew />
+      <FabDelete />
+    </>
   )
 }
