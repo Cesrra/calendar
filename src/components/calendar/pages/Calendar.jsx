@@ -10,7 +10,7 @@ import { FabDelete } from '../../FabDelete'
 export const CalendarPage = () => {
   const { openDateModal } = useUiStore()
   const { events, setActiveEvent } = useCalendarStore()
-  const [ lastView ] = useState(localStorage.getItem('lastView' || 'day'))
+  const [ lastView ] = useState(localStorage.getItem('lastView') || 'month')
 
   const eventStayleGetter = ( event, start, end, isSelected ) => {
     const style = {
