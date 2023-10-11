@@ -16,7 +16,7 @@ const registerFormFields = {
 }
 
 export const Login = () => {
-    const { startLogin, errorMessage } = useAuthStore()
+    const { startLogin, startRegister, errorMessage } = useAuthStore()
 
     const { loginEmail, LoginPassword, onInputChange:onLoginInputChange } = useForm( loginFormFields )
     const { 
@@ -33,17 +33,23 @@ export const Login = () => {
     }
     const registerSubmit = ( event ) => {
         event.preventDefault()
-        console.log({
-            registerName,
-            registerEmail,
-            registerPassword, 
-            registerPassword2,
+
+        if( registerPassword !== registerPassword2 ) {
+            Swal.fire('Error de registro', 'Las contraceñas no coninciden', 'error')
+            return
+        }
+
+        startRegister({
+            name: registerName,
+            email: registerEmail,
+            password: registerPassword, 
+            password2: registerPassword2,
         })
     }
 
     useEffect(() => {
         if ( errorMessage !== undefined ){
-            Swal.fire('Error en la authenticación', errorMessage, 'error')
+            Swal.fire('Error de authenticación', errorMessage, 'error')
         }
     }, [errorMessage])
     
