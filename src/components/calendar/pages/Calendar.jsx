@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Calendar } from 'react-big-calendar'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import { FabAddNew, Navbar } from "../../"
@@ -9,7 +9,7 @@ import { FabDelete } from '../../FabDelete'
 
 export const CalendarPage = () => {
   const { openDateModal } = useUiStore()
-  const { events, setActiveEvent } = useCalendarStore()
+  const { events, setActiveEvent, startGetEvents } = useCalendarStore()
   const [ lastView ] = useState(localStorage.getItem('lastView') || 'month')
 
   const eventStayleGetter = ( event, start, end, isSelected ) => {
@@ -38,6 +38,11 @@ export const CalendarPage = () => {
   const onViewChange = ( event ) => {
     localStorage.setItem('lastView', event)
   }
+  
+  useEffect(() => {
+    startGetEvents()  
+  }, [])
+  
 
   return (
     <>
