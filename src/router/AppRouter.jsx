@@ -3,6 +3,7 @@ import { Login } from "../components/auth"
 import { CalendarPage } from "../components/calendar"
 import { useAuthStore } from "../hooks"
 import { useEffect } from "react"
+import { Loader } from "../components/Loader"
 
 export const AppRouter = () => {
   
@@ -11,12 +12,13 @@ export const AppRouter = () => {
 
   useEffect(() => {
     startCheckAuthToken()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   
 
   if ( status === 'checking') {
     return (
-      <h2>Cargando...</h2>
+      <Loader />
     )
   }
 
