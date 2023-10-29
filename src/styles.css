@@ -43,17 +43,24 @@
     border-radius: 100%;
     bottom: 25px;
     font-size: 25px;
-    padding: 25px;
-    position: fixed;
-    right: 25px;
+    padding: 20px;
+    position: absolute;
+    right: 40px;
+    z-index: 500;
 }
 
 .fab-danger {
     border-radius: 100%;
     bottom: 25px;
     font-size: 25px;
-    position: fixed;
-    left: 60px;
-    width: 60px;
-    height: 60px;
+    position: absolute;
+    left: 40px;
+    width: 62px;
+    height: 62px;
+    z-index: 500;
+}
+
+.icon-fab {
+    position: sticky;
+    z-index: -1;
 }

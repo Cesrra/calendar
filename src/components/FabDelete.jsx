@@ -15,7 +15,7 @@ export const FabDelete = () => {
                 display: hasEventSelected ? '' : 'none'
             }}
         >
-            <i className="fas fa-trash-alt"></i>
+            <i className="fas fa-trash-alt icon-fab"></i>
         </button>
     )
 }
